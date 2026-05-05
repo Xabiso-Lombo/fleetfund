@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleetfund - Invest in Trucks, Earn Like a Boss</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="IMAGES/fleetfund.svg" alt="Fleetfund" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color: white; font-size: 1.5rem; font-weight: bold;\'>FLEETFUND</span>'">
+            </div>
+            
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                <i class="fas fa-bars" id="menuIcon"></i>
+            </button>
+
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+                    <li><a href="#" onclick="showPage('how-it-works'); return false;">How It Works</a></li>
+                    <li><a href="#" onclick="showPage('investments'); return false;">Investments</a></li>
+                </ul>
+                <div class="nav-buttons" id="navButtons">
+                    <a href="#" class="btn btn-primary" onclick="openModal('loginModal'); return false;">Login</a>
+                    <a href="#" class="btn btn-secondary" onclick="openModal('signupModal'); return false;">Sign Up</a>
+                </div>
+                <div class="nav-user" id="userSection" style="display: none;">
+                    <span id="userName" style="color: white; margin-right: 1rem;"></span>
+                    <a href="#" class="btn btn-secondary" onclick="logout(); return false;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2 style="color: #061b92; margin-bottom: 1.5rem;">Login</h2>
+            <form id="loginForm">
+                <div class="calc-input">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="calc-input">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <div id="loginError" style="color: red; margin-bottom: 1rem; display: none;"></div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2 style="color: #061b92; margin-bottom: 1.5rem;">Create Account</h2>
+            <form id="signupForm">
+                <div class="calc-input">
+                    <label>Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="calc-input">
+                    <label>Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="calc-input">
+                    <label>Phone</label>
+                    <input type="tel" id="signupPhone" placeholder="+27..." required>
+                </div>
+                <div class="calc-input">
+                    <label>Password (min 6 characters)</label>
+                    <input type="password" id="signupPassword" minlength="6" required>
+                </div>
+                <div id="signupError" style="color: red; margin-bottom: 1rem; display: none;"></div>
+                <div id="signupSuccess" style="color: green; margin-bottom: 1rem; display: none;"></div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page-content active">
+        <section class="hero">
+            <h1>Invest In Real Logistics Assets</h1>
+            <p>Earn returns from trucks and infrastructure powering the economy</p>
+            <a href="#interest-form" class="btn btn-primary">Join the Waitlist</a>
+            <div class="hero-subtext">DRIVING GROWTH, SECURING RETURNS</div>
+        </section>
+
+        <section>
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">🚚</div>
+                    <h3>Choose a Truck</h3>
+                    <p>Browse available trucks and routes</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">💰</div>
+                    <h3>Invest from R500</h3>
+                    <p>Start small with fractional ownership</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">📊</div>
+                    <h3>Earn via Payouts</h3>
+                    <p>Receive returns from your truck's earnings</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">📈</div>
+                    <h3>Earn Quarterly</h3>
+                    <p>Get paid every quarter by your wallet</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="investments">
+            <h2 class="section-title">Investment Calculator</h2>
+            <div class="calculator">
+                <h3>Calculate Your Returns</h3>
+                <div class="calc-input">
+                    <label>Investment Amount (R)</label>
+                    <input type="number" id="investAmount" value="10000" min="500">
+                </div>
+                <div class="calc-input">
+                    <label>Expected ROI (%)</label>
+                    <select id="roiSelect">
+                        <option value="7.5">7.5% - Standard</option>
+                        <option value="11">11% - Premium</option>
+                    </select>
+                </div>
+                <div class="calc-input">
+                    <label>Investment Period</label>
+                    <select id="periodSelect">
+                        <option value="6">6 Months</option>
+                        <option value="12">12 Months</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="calculateReturns()" style="width: 100%;">Calculate Returns</button>
+                <div class="calc-result" id="calcResult" style="display: none; margin-top: 1rem;">
+                    <h4>Estimated Returns</h4>
+                    <div class="amount" id="returnAmount">R0</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- HOW IT WORKS PAGE -->
+    <div id="how-it-works" class="page-content">
+        <section class="hero hero-compact">
+            <h1>How It Works</h1>
+            <p>Simple, transparent, and accessible investment in logistics</p>
+            <a href="#interest-form" class="btn btn-primary">Register Your Investment Interest</a>
+        </section>
+
+        <section class="py-5" style="background: #f8f9fa;">
+            <div class="container py-4">
+                <h2 class="text-center mb-5" style="color: #061b92; font-weight: 700; font-size: clamp(1.5rem, 4vw, 2.5rem);">PUT YOUR CAPITAL ON THE ROAD</h2>
+                <div class="row g-4 align-items-start">
+                    <div class="col-lg-6">
+                        <h2 class="mb-4" style="color: #061b92; font-weight: 700; font-size: clamp(1.25rem, 3vw, 1.75rem);">1. The Investor Journey</h2>
+                        <h5 class="mb-2" style="color: #061b92; font-size: clamp(1rem, 2.5vw, 1.25rem);"><i class="fa-solid fa-truck me-2" style="color: #061b92;"></i>Choose Your Asset</h5>
+                        <p class="text-muted mb-4">Browse our fleet of available trucks and specific income-generating routes.</p>
+                        <h5 class="mb-2" style="color: #061b92; font-size: clamp(1rem, 2.5vw, 1.25rem);"><i class="fa-solid fa-coins me-2" style="color: #061b92;"></i>Invest Your Way</h5>
+                        <p class="text-muted mb-4">Start small with a fractional ownership from R500 ot build a portfolio over time.</p>
+                        <h5 class="mb-2" style="color: #061b92; font-size: clamp(1rem, 2.5vw, 1.25rem);"><i class="fa-solid fa-chart-line me-2" style="color: #061b92;"></i>Track Your Investment</h5>
+                        <p class="text-muted mb-4">Monitor your truck's daily activity and projected returns through your dashboard.</p>
+                        <h5 class="mb-2" style="color: #061b92; font-size: clamp(1rem, 2.5vw, 1.25rem);"><i class="fa-solid fa-calendar-check me-2" style="color: #061b92;"></i>Earn Quarterly</h5>
+                        <p class="text-muted mb-0">Receive passive income payouts directly to your wallet every quarter.</p>
+
+                        <h2 class="mb-3 mt-5" style="color: #061b92; font-weight: 700; font-size: clamp(1.25rem, 3vw, 1.75rem);">2. The Logistics Perspective (Behind the Scenes)</h2>
+                        <p class="text-muted mb-4">Behind every investment, there is a full logistics engine making sure the trucks, routes, and operations run smoothly.</p>
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="d-flex flex-column align-items-center text-center p-3 rounded bg-white shadow-sm h-100">
+                                    <span class="rounded-circle d-flex align-items-center justify-content-center mb-2" style="width: 48px; height: 48px; background: #061b92; color: white;"><i class="fa-solid fa-wrench"></i></span>
+                                    <small class="fw-semibold" style="color: #061b92;">Procurement</small>
+                                    <p class="text-muted small mb-0 mt-1">We identify and secure high-demand logistics assets.</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="d-flex flex-column align-items-center text-center p-3 rounded bg-white shadow-sm h-100">
+                                    <span class="rounded-circle d-flex align-items-center justify-content-center mb-2" style="width: 48px; height: 48px; background: #061b92; color: white;"><i class="fa-solid fa-file-contract"></i></span>
+                                    <small class="fw-semibold" style="color: #061b92;">Contracts</small>
+                                    <p class="text-muted small mb-0 mt-1">Trucks are deployed on secured mining and agricultural routes.</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="d-flex flex-column align-items-center text-center p-3 rounded bg-white shadow-sm h-100">
+                                    <span class="rounded-circle d-flex align-items-center justify-content-center mb-2" style="width: 48px; height: 48px; background: #061b92; color: white;"><i class="fa-solid fa-shield-halved"></i></span>
+                                    <small class="fw-semibold" style="color: #061b92;">Risk Mitigation</small>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="d-flex flex-column align-items-center text-center p-3 rounded bg-white shadow-sm h-100">
+                                    <span class="rounded-circle d-flex align-items-center justify-content-center mb-2" style="width: 48px; height: 48px; background: #061b92; color: white;"><i class="fa-solid fa-gears"></i></span>
+                                    <small class="fw-semibold" style="color: #061b92;">Management</small>
+                                    <p class="text-muted small mb-0 mt-1">Our team handles drivers, maintenance, and operations so you can focus on earning.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row g-3">
+                            <div class="col-sm-6 col-lg-6 col-xl-3">
+                                <div class="card h-100 border-0 shadow-sm rounded-3">
+                                    <div class="card-body text-center pt-4 pb-3">
+                                        <span class="rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px; background: #061b92; color: white; font-weight: bold;">1</span>
+                                        <h6 class="card-title mb-2" style="color: #061b92;">Choose a Truck</h6>
+                                        <p class="card-text small text-muted mb-0">Browse our fleet and routes. Each listing shows details, returns, and terms.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-6 col-xl-3">
+                                <div class="card h-100 border-0 shadow-sm rounded-3">
+                                    <div class="card-body text-center pt-4 pb-3">
+                                        <span class="rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px; background: #061b92; color: white; font-weight: bold;">2</span>
+                                        <h6 class="card-title mb-2" style="color: #061b92;">Invest from R500</h6>
+                                        <p class="card-text small text-muted mb-0">Fractional ownership. Invest what you can and build your portfolio over time.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-6 col-xl-3">
+                                <div class="card h-100 border-0 shadow-sm rounded-3">
+                                    <div class="card-body text-center pt-4 pb-3">
+                                        <span class="rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px; background: #061b92; color: white; font-weight: bold;">3</span>
+                                        <h6 class="card-title mb-2" style="color: #061b92;">Track Your Investment</h6>
+                                        <p class="card-text small text-muted mb-0">Monitor performance via our dashboard. See earnings and projected returns.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-6 col-xl-3">
+                                <div class="card h-100 border-0 shadow-sm rounded-3">
+                                    <div class="card-body text-center pt-4 pb-3">
+                                        <span class="rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px; background: #061b92; color: white;"><i class="fa-solid fa-calendar-check"></i></span>
+                                        <h6 class="card-title mb-2" style="color: #061b92;">Earn Quarterly</h6>
+                                        <p class="card-text small text-muted mb-0">Returns to your wallet every quarter.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                                    <div class="card-header border-0 py-2" style="background: #061b92; color: white; font-weight: bold;">Asset ID: MILA001</div>
+                                    <div class="card-body">
+                                        <p class="mb-1 small"><strong>Contract Type:</strong> Mpumalanga Mine (50km x2/day)</p>
+                                        <p class="mb-1 small"><strong>Gross Monthly Revenue:</strong> R88,000</p>
+                                        <p class="mb-1 small"><strong>Net Return (After Costs):</strong> R28,000/month</p>
+                                        <p class="mb-1 small"><strong>Projected Annual Return:</strong> <span style="color: #061b92; font-weight: bold;">16.5% p.a.</span></p>
+                                        <p class="mb-1 small"><strong>Contract Term:</strong> 24 Months</p>
+                                        <p class="mb-0 small"><strong>Minimum Entry:</strong> R500 / slot</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                                    <div class="card-header border-0 py-2" style="background: #061b92; color: white; font-weight: bold;">4. Why Trucks vs Traditional Investments?</div>
+                                    <div class="card-body">
+                                        <p class="mb-1 small"><strong>Traditional (Stocks/Property):</strong> 12% – 20%</p>
+                                        <p class="mb-1 small"><strong>Trucks (Fleetfund):</strong></p>
+                                        <p class="mb-1" style="color: #061b92; font-weight: bold; font-size: clamp(1rem, 3vw, 1.25rem);">16.5% p.a.</p>
+                                        <p class="small text-muted mb-3">Fully managed by us.</p>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <a href="#interest-form" class="btn btn-primary btn-sm" style="background: #061b92; border-color: #061b92;">Get Started</a>
+                                            <a href="#" class="btn btn-outline-primary btn-sm" style="border-color: #061b92; color: #061b92;">Chat with our WhatsApp Bot</a>
+                                            <a href="#" class="btn btn-primary btn-sm" style="background: #061b92; border-color: #061b92;">Download Full Brochure</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- INVESTMENTS PAGE -->
+    <div id="investments" class="page-content">
+        <section class="hero hero-compact">
+            <h1>Investment Opportunities</h1>
+            <p>Choose from our fleet of income-generating trucks</p>
+            <a href="#interest-form" class="btn btn-primary">Be First to Invest</a>
+        </section>
+
+        <section style="background: white;">
+            <h2 class="section-title">Calculate Your Returns</h2>
+            <div class="calculator">
+                <h3>Investment Calculator</h3>
+                <div class="calc-input">
+                    <label>Investment Amount (R)</label>
+                    <input type="number" id="investAmount2" value="10000" min="500">
+                </div>
+                <div class="calc-input">
+                    <label>Expected ROI (%)</label>
+                    <select id="roiSelect2">
+                        <option value="7.5">7.5% - Standard</option>
+                        <option value="8">8% - Enhanced</option>
+                        <option value="9">9% - Premium</option>
+                        <option value="10.5">10.5% - High Yield</option>
+                        <option value="11">11% - Elite</option>
+                    </select>
+                </div>
+                <div class="calc-input">
+                    <label>Investment Period</label>
+                    <select id="periodSelect2">
+                        <option value="6">6 Months</option>
+                        <option value="9">9 Months</option>
+                        <option value="12">12 Months</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="calculateReturns2()" style="width: 100%;">Calculate Returns</button>
+                <div class="calc-result" id="calcResult2" style="display: none; margin-top: 1rem;">
+                    <h4>Estimated Returns</h4>
+                    <div class="amount" id="returnAmount2">R0</div>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Total Return: <span id="totalReturn2">R0</span></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section id="interest-form">
+        <h2 class="section-title">Start Your Investment Journey</h2>
+        <div class="calculator">
+            <p style="margin-bottom: 1.5rem;">Share your details to be notified when Fleetfund investment opportunities open.</p>
+            <form id="interestForm">
+                <div class="calc-input">
+                    <label>Name</label>
+                    <input type="text" id="interestName" placeholder="Your Name" required>
+                </div>
+                <div class="calc-input">
+                    <label>Email</label>
+                    <input type="email" id="interestEmail" placeholder="you@example.com" required>
+                </div>
+                <div class="calc-input">
+                    <label>Phone</label>
+                    <input type="tel" id="interestPhone" placeholder="+27..." required>
+                </div>
+                <div class="calc-input">
+                    <label>Investment Amount Interested (R)</label>
+                    <input type="number" id="interestAmount" placeholder="10000" min="500">
+                </div>
+                <div id="interestMessage" style="margin-bottom: 1rem; display: none;"></div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Fleetfund</h3>
+                <p>South Africa's premier mutual truck ownership platform</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#" onclick="showPage('home'); return false;">Overview</a>
+                <a href="#" onclick="showPage('how-it-works'); return false;">How It Works</a>
+                <a href="#" onclick="showPage('investments'); return false;">Investments</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="#">Contact</a>
+                <a href="#">Legal</a>
+                <a href="#">Newsroom</a>
+                <a href="#">Investors</a>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="disclaimer">
+                FleetFund is an alternative investment platform operated by Milani Sikhule Group. Investments involve risk and returns are not guaranteed.
+            </p>
+            <p>&copy; 2026 Fleetfund. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // API Base URL - Change this to your backend URL when deployed
+        const API_URL = 'http://localhost:5000/api';
+        
+        // Check if user is logged in on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            if (token && user) {
+                showLoggedInState(JSON.parse(user));
+            }
+        });
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Sign Up Form
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            const errorDiv = document.getElementById('signupError');
+            const successDiv = document.getElementById('signupSuccess');
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, phone, password })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || 'Registration failed');
+                }
+                
+                // Save token and user
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                
+                // Show success
+                successDiv.textContent = 'Account created successfully!';
+                successDiv.style.display = 'block';
+                errorDiv.style.display = 'none';
+                
+                // Update UI
+                showLoggedInState(data.user);
+                
+                // Close modal after 1.5 seconds
+                setTimeout(() => {
+                    closeModal('signupModal');
+                    successDiv.style.display = 'none';
+                }, 1500);
+                
+            } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+                successDiv.style.display = 'none';
+            }
+        });
+
+        // Login Form
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const errorDiv = document.getElementById('loginError');
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || 'Login failed');
+                }
+                
+                // Save token and user
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                
+                // Update UI
+                showLoggedInState(data.user);
+                
+                // Close modal
+                closeModal('loginModal');
+                document.getElementById('loginForm').reset();
+                errorDiv.style.display = 'none';
+                
+            } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+            }
+        });
+
+        // Show logged in state
+        function showLoggedInState(user) {
+            document.getElementById('navButtons').style.display = 'none';
+            document.getElementById('userSection').style.display = 'flex';
+            document.getElementById('userName').textContent = `Hi, ${user.name}`;
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            document.getElementById('navButtons').style.display = 'flex';
+            document.getElementById('userSection').style.display = 'none';
+        }
+
+        // Investment Interest Form
+        document.getElementById('interestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const token = localStorage.getItem('token');
+            const messageDiv = document.getElementById('interestMessage');
+            
+            if (!token) {
+                messageDiv.textContent = 'Please login first to submit your interest.';
+                messageDiv.style.color = 'red';
+                messageDiv.style.display = 'block';
+                openModal('loginModal');
+                return;
+            }
+            
+            const name = document.getElementById('interestName').value;
+            const email = document.getElementById('interestEmail').value;
+            const phone = document.getElementById('interestPhone').value;
+            const amount = document.getElementById('interestAmount').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/users/interest`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ 
+                        userId: JSON.parse(localStorage.getItem('user')).id,
+                        amount, 
+                        roi: '16.5%', 
+                        period: '24 months' 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to submit');
+                }
+                
+                messageDiv.textContent = 'Thank you! Your investment interest has been recorded.';
+                messageDiv.style.color = 'green';
+                messageDiv.style.display = 'block';
+                document.getElementById('interestForm').reset();
+                
+            } catch (error) {
+                messageDiv.textContent = error.message;
+                messageDiv.style.color = 'red';
+                messageDiv.style.display = 'block';
+            }
+        });
+
+        // Calculate Returns Functions
+        function calculateReturns() {
+            const amount = parseFloat(document.getElementById('investAmount').value) || 0;
+            const roi = parseFloat(document.getElementById('roiSelect').value) || 0;
+            const period = parseInt(document.getElementById('periodSelect').value) || 12;
+            
+            const returnAmount = amount * (roi / 100) * (period / 12);
+            
+            document.getElementById('returnAmount').textContent = `R${returnAmount.toFixed(2)}`;
+            document.getElementById('calcResult').style.display = 'block';
+        }
+
+        function calculateReturns2() {
+            const amount = parseFloat(document.getElementById('investAmount2').value) || 0;
+            const roi = parseFloat(document.getElementById('roiSelect2').value) || 0;
+            const period = parseInt(document.getElementById('periodSelect2').value) || 12;
+            
+            const returnAmount = amount * (roi / 100) * (period / 12);
+            const totalReturn = amount + returnAmount;
+            
+            document.getElementById('returnAmount2').textContent = `R${returnAmount.toFixed(2)}`;
+            document.getElementById('totalReturn2').textContent = `R${totalReturn.toFixed(2)}`;
+            document.getElementById('calcResult2').style.display = 'block';
+        }
+
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            const navMenu = document.getElementById('navMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            
+            navMenu.classList.toggle('active');
+            
+            if (navMenu.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const navContainer = document.querySelector('.nav-container');
+            const menuIcon = document.getElementById('menuIcon');
+            
+            if (!navContainer.contains(event.target) && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+    </script>
+</body>
+</html>
